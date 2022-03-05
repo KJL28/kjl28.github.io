@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FRC Predictions</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>&#128029 Un-bee-lievable Match Predictions &#128029</h1>
+    <div>
+        <div>
+            TBA API Authentication Key:
+            <input id="authKey">
+        </div>
+        <div>
+            Event Key:
+            <input placeholder="ex. 2022cala" id="eventKey" text="2022caph">
+        </div>
+        <div>
+            <input type="button" value="Enter" onclick="enter()">
+            <!-- <input type="button" value="Match" onclick="matchButton()"> -->
+            <input type="button" value="Clear" onclick="clearTables()">
+            <!-- <input type="button" value="Sort" onclick="sortMatches()"> -->
+        </div>
+    </div>
+    <br>
+    <table id="matchTable">
+        <tr>
+            <th rowspan="2">Match Key</th>
+            <th colspan="5">Blue Alliance</th>
+            <th colspan="5">Red Alliance</th>
+            <th rowspan="2">Probablity</th>
+            <th rowspan="2">Pred.</th>
+            <th rowspan="2">Actual</th>
+        </tr>
+        <tr>
+            <th>Blue 1</th>
+            <th>Blue 2</th>
+            <th>Blue 3</th>
+            <th>Avg.</th>
+            <th>Std. Dev.</th>
+            <th>Red 1</th>
+            <th>Red 2</th>
+            <th>Red 3</th>
+            <th>Avg.</th>
+            <th>Std. Dev.</th>
+        </tr>
+    </table>
+    <br>
+    <table id="teamTable">
+        <tr>
+            <th>Team Key</th>
+            <th>Taxi</th>
+            <th>Auto. Cargo</th>
+            <th>TeleOp. Cargo</th>
+            <th>Low</th>
+            <th>Mid</th>
+            <th>High</th>
+            <th>Traversal</th>
+            <th>Avg. Points</th>
+        </tr>
+    </table>
+</body>
+
+</html>
