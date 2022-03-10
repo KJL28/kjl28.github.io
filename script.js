@@ -337,25 +337,26 @@ function getMatchNum(key) {
 }
 
 
-function sortMatches() {
-    var table, rows, switching, i, x, y, shouldSwitch;
-    table = document.getElementById("matchTable");
-    switching = true;
+function sortTable(table, headers, col, sort) {
+    let switching = true;
     while (switching) {
         switching = false;
-        rows = table.rows;
-        for (i = 2; i < (rows.length - 1); i++) {
-            shouldSwitch = false;
-            x = rows[i].getElementsByTagName("TD")[0];
-            y = rows[i + 1].getElementsByTagName("TD")[0];
-            if (getMatchNum(x.innerHTML) > getMatchNum(y.innerHTML)) {
-                shouldSwitch = true;
+        let rows = table.rows;
+        for (let i = headers; i < rows.length - 1; i++) {
+            let x = rows[i].getElementsByTagName("TD")[col];
+            let y = rows[i + 1].getElementsByTagName("TD")[col];
+            if (sort(x.innerHTML, y.innerHTML)) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
                 break;
             }
         }
-        if (shouldSwitch) {
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-        }
     }
+}
+
+
+function sortMatches() {
+    let table = document.getElementById("matchTable");
+    let sort = (a, b) => getMatchNum(a) > getMatchNum(b)
+    sortTable(table, 2, 0, sort);
 }
