@@ -9,6 +9,7 @@ const TABLE_SORTS = [
     parsePercent,
     parsePercent,
     parsePercent,
+    parseFloat,
     parseFloat
 ];
 const MATCH_SORTS = [
@@ -234,6 +235,7 @@ function getTeamCells(teamKey, statistics) {
     cells.push(formatPercent(statistics["high"]["avg"]));
     cells.push(formatPercent(statistics["traversal"]["avg"]));
     cells.push(formatRound(getAvgScore(statistics)));
+    cells.push(formatRound(Math.sqrt(getVariance(statistics))));
     return cells;
 }
 
