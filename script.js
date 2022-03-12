@@ -1,9 +1,58 @@
 const URL_ROOT = "https://www.thebluealliance.com/api/v3/";
 const AUTH_HEADER = "?X-TBA-Auth-Key=";
+const TABLE_SORTS = [
+    parseTeamNum,
+    parsePercent,
+    parseFloat,
+    parseFloat,
+    parsePercent,
+    parsePercent,
+    parsePercent,
+    parsePercent,
+    parseFloat
+];
+const MATCH_SORTS = [
+    parseMatchNum,
+    parseTeamNum,
+    parseTeamNum,
+    parseTeamNum,
+    parseFloat,
+    parseFloat,
+    parseTeamNum,
+    parseTeamNum,
+    parseTeamNum,
+    parseFloat,
+    parseFloat,
+    parsePercent,
+    (a) => a,
+    (a) => a
+];
+const MATCH_DIRECTIONS = [
+    increasing,
+    increasing,
+    increasing,
+    increasing,
+    decreasing,
+    decreasing,
+    increasing,
+    increasing,
+    increasing,
+    decreasing,
+    decreasing,
+    decreasing,
+    increasing,
+    increasing
+];
+
+
 var savedStatistics = {};
 var teamAmount = 0;
 var authKey = "";
 var eventKey = "";
+var currentTableSortCol = -1;
+var currentTableSortDirection = increasing;
+var currentMatchSortCol = -1;
+var currentMatchSortDirection = increasing;
 
 
 function sum(arr) {
@@ -70,7 +119,7 @@ function getMatchInfo(match, teamKey) {
     let redIndex = redKeys.indexOf(teamKey) + 1;
 
     if (blueIndex > 0) {
-        return [match["score_breakdown"]["blue"], redIndex];
+        return [match["score_breakdown"]["blue"], blueIndex];
     } else if (redIndex > 0) {
         return [match["score_breakdown"]["red"], redIndex];
     } else {
@@ -278,7 +327,8 @@ function predictMatches() {
     fetch(url("event/" + eventKey + "/matches"))
         .then((response) => response.json())
         .then((matches) => addMatches(matches))
-        .then((_) => sortMatches())
+        .then((_) => sortMatches(0))
+        .then((_) => sortTeams(0))
         .catch((e) => console.log("error fetching matches"));
 }
 
@@ -326,11 +376,29 @@ function addTeamRow(cells) {
 }
 
 
-function getMatchNum(key) {
+function parseMatchNum(key) {
     if (key.match("qm\\d{2}$")) {
         return parseInt(key.substring(key.length - 2));
     } else if (key.match("qm\\d$")) {
         return parseInt(key.substring(key.length - 1));
+    } else {
+        return -1;
+    }
+}
+
+
+function parseTeamNum(key) {
+    if (key.match("frc\\d{1,4}")) {
+        return parseInt(key.substring(3));
+    } else {
+        return -1;
+    }
+}
+
+
+function parsePercent(key) {
+    if (key.match("\\d{1,2}%")) {
+        return parseInt(key.substring(0, key.length - 1));
     } else {
         return -1;
     }
@@ -355,8 +423,52 @@ function sortTable(table, headers, col, sort) {
 }
 
 
-function sortMatches() {
+function increasing(func) {
+    return (a, b) => func(a) > func(b);
+}
+
+
+function decreasing(func) {
+    return (a, b) => func(a) < func(b);
+}
+
+
+function sortMatches(col) {
+    if (currentMatchSortCol == col) {
+        if (currentMatchSortDirection == increasing) {
+            currentMatchSortDirection = decreasing;
+        } else {
+            currentMatchSortDirection = increasing;
+        }
+    } else {
+        currentMatchSortCol = col;
+        currentMatchSortDirection = MATCH_DIRECTIONS[col];
+    }
+
     let table = document.getElementById("matchTable");
-    let sort = (a, b) => getMatchNum(a) > getMatchNum(b)
-    sortTable(table, 2, 0, sort);
+    sortTable(table, 2, col, currentMatchSortDirection(MATCH_SORTS[col]));
+}
+
+
+function sortTeams(col) {
+    if (currentTableSortCol == col) {
+        if (currentTableSortDirection == increasing) {
+            currentTableSortDirection = decreasing;
+        } else {
+            currentTableSortDirection = increasing;
+        }
+    } else {
+        currentTableSortCol = col;
+        currentTableSortDirection = col == 0 ? increasing : decreasing;
+    }
+
+    let table = document.getElementById("teamTable");
+    sortTable(table, 1, col, currentTableSortDirection(TABLE_SORTS[col]));
+}
+
+
+function clickPress(event) {
+    if (event.keyCode == 13) {
+        enter();
+    }
 }

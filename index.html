@@ -16,7 +16,7 @@
         </div>
         <div>
             Event Key:
-            <input placeholder="ex. 2022cala" id="eventKey" text="2022caph">
+            <input placeholder="ex. 2022cala" id="eventKey" text="2022caph" onkeypress="clickPress(event)">
         </div>
         <div>
             <input type="button" value="Enter" onclick="enter()">
@@ -28,38 +28,38 @@
     <br>
     <table id="matchTable">
         <tr>
-            <th rowspan="2">Match Key</th>
+            <th rowspan="2" onclick="sortMatches(0)">Match Key</th>
             <th colspan="5">Blue Alliance</th>
             <th colspan="5">Red Alliance</th>
-            <th rowspan="2">Probablity</th>
-            <th rowspan="2">Pred.</th>
-            <th rowspan="2">Actual</th>
+            <th rowspan="2" onclick="sortMatches(11)">Probablity</th>
+            <th rowspan="2" onclick="sortMatches(12)">Pred.</th>
+            <th rowspan="2" onclick="sortMatches(13)">Actual</th>
         </tr>
         <tr>
-            <th>Blue 1</th>
-            <th>Blue 2</th>
-            <th>Blue 3</th>
-            <th>Avg.</th>
-            <th>Std. Dev.</th>
-            <th>Red 1</th>
-            <th>Red 2</th>
-            <th>Red 3</th>
-            <th>Avg.</th>
-            <th>Std. Dev.</th>
+            <th onclick="sortMatches(1)">Blue 1</th>
+            <th onclick="sortMatches(2)">Blue 2</th>
+            <th onclick="sortMatches(3)">Blue 3</th>
+            <th onclick="sortMatches(4)">Avg.</th>
+            <th onclick="sortMatches(5)">Std. Dev.</th>
+            <th onclick="sortMatches(6)">Red 1</th>
+            <th onclick="sortMatches(7)">Red 2</th>
+            <th onclick="sortMatches(8)">Red 3</th>
+            <th onclick="sortMatches(9)">Avg.</th>
+            <th onclick="sortMatches(10)">Std. Dev.</th>
         </tr>
     </table>
     <br>
     <table id="teamTable">
         <tr>
-            <th>Team Key</th>
-            <th>Taxi</th>
-            <th>Auto. Cargo</th>
-            <th>TeleOp. Cargo</th>
-            <th>Low</th>
-            <th>Mid</th>
-            <th>High</th>
-            <th>Traversal</th>
-            <th>Avg. Points</th>
+            <th onclick="sortTeams(0)">Team Key</th>
+            <th onclick="sortTeams(1)">Taxi</th>
+            <th onclick="sortTeams(2)">Auto. Cargo</th>
+            <th onclick="sortTeams(3)">TeleOp. Cargo</th>
+            <th onclick="sortTeams(4)">Low</th>
+            <th onclick="sortTeams(5)">Mid</th>
+            <th onclick="sortTeams(6)">High</th>
+            <th onclick="sortTeams(7)">Traversal</th>
+            <th onclick="sortTeams(8)">Avg. Points</th>
         </tr>
     </table>
 </body>
