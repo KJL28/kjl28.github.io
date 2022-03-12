@@ -53,7 +53,7 @@ var eventKey = "";
 var currentTableSortCol = -1;
 var currentTableSortDirection = increasing;
 var currentMatchSortCol = -1;
-var currentMatchSortDirection = increasing;
+var currentMatchSortDirection = decreasing;
 
 
 function sum(arr) {
