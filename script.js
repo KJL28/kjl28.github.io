@@ -326,6 +326,8 @@ function addMatches(matches) {
 
 
 function predictMatches() {
+    currentMatchSortCol = -1;
+    currentTableSortCol = -1;
     fetch(url("event/" + eventKey + "/matches"))
         .then((response) => response.json())
         .then((matches) => addMatches(matches))
@@ -379,7 +381,9 @@ function addTeamRow(cells) {
 
 
 function parseMatchNum(key) {
-    if (key.match("qm\\d{2}$")) {
+    if (key.match("qm\\d{3}$")) {
+        return parseInt(key.substring(key.length - 3));
+    } else if (key.match("qm\\d{2}$")) {
         return parseInt(key.substring(key.length - 2));
     } else if (key.match("qm\\d$")) {
         return parseInt(key.substring(key.length - 1));
